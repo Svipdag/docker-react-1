@@ -5,3 +5,15 @@ before_install:
   - docker build -t svipdag/docker-react-1 -f Dockerfile.dev .
 script:
   - docker run -e CI=true svipdag/docker-react-1 npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "frontend-react-1-ebs"
+  env: "Frontend-react-1-ebs-env"
+  bucket_name: "elasticbeanstalk-us-east-1-751962673207"
+  bucket_path: "frontend-react-1-ebs"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
